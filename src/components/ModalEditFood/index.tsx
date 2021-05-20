@@ -1,4 +1,4 @@
-import { Component, createRef, useRef } from 'react';
+import { Component, createRef, useEffect, useRef } from 'react';
 import { FiCheckSquare } from 'react-icons/fi';
 
 import { Form } from './styles';
@@ -7,13 +7,14 @@ import { Input } from '../Input';
 import { Food } from '../../types';
 import { FormHandles } from '@unform/core'
 
-interface ModalEditFood {
+interface ModalEditProps {
   editingFood?: Food;
   setIsOpen: () => void;
   handleUpdateFood: (food: Food) => void;
   isOpen: boolean;
+}
 
-export function ModalEditFood({ editingFood, setIsOpen, handleUpdateFood, isOpen }: ModalEditFood) {
+export function ModalEditFood({ editingFood, setIsOpen, handleUpdateFood, isOpen }: ModalEditProps) {
   const formRef = useRef<FormHandles>(null);
 
   function handleSubmit(food: Food) {
@@ -38,7 +39,7 @@ export function ModalEditFood({ editingFood, setIsOpen, handleUpdateFood, isOpen
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Form ref={this.formRef} onSubmit={this.handleSubmit} initialData={editingFood}>
+      <Form ref={formRef} onSubmit={handleSubmit} initialData={editingFood}>
         <h1>Editar Prato</h1>
         <Input name="image" placeholder="Cole o link aqui" />
 
